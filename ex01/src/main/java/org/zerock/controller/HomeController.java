@@ -33,6 +33,8 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
+		//String 타입을 반환 -> 상황에 따라 다른 화면을 보여줄 필요가 있을 경우에 유용하게 사용함 , 
+		// 일반적으로 jsp파일의 이름을 의미
 		return "home";
 	}
 	

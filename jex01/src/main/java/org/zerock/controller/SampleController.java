@@ -204,9 +204,4 @@ public class SampleController {
 		});
 	}
 	
-	
-	
-	//@ControllerAdvice
-	// 횡단분리
-	
 }

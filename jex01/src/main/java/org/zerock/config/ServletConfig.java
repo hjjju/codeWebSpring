@@ -1,6 +1,11 @@
 package org.zerock.config;
 
+import java.io.IOException;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -9,7 +14,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
-@ComponentScan(basePackages = {"org.zerock.controller"})
+@ComponentScan(basePackages = {"org.zerock.controller","org.zerock.exception"})
 public class ServletConfig implements WebMvcConfigurer {
 	//viewResolver controller가 반환한 결과를 어떤View를 통해서 처리하는것이 좋을지 해석하는역할
 	// 가장 흔하게 사용하는 설정은 servlet-context.xml에 정의된internalResourceViewResolver
@@ -25,6 +30,22 @@ public class ServletConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources");
+	}
+	
+	
+	@Bean(name="multipartResolver")
+	public CommonsMultipartResolver getResolver() throws IOException{
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		
+		//10MB
+		resolver.setMaxUploadSize(1024*1024*10);
+		resolver.setMaxUploadSizePerFile(1024*1024*2);
+		resolver.setUploadTempDir(new FileSystemResource("c:\\upload\\tmp"));
+		
+		
+		return resolver;
+		
+		
 	}
 
 }
